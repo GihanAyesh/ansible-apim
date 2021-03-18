@@ -49,14 +49,14 @@ security_file_list:
 #       dest: '{{ misc_file_copy_location }}/apimcli.zip' }
 
 # Set the location the product packages should reside in (eg: "local" in the /files directory, "remote" in a remote location)
-pack_location: local
-#pack_location: remote
+#pack_location: local
+pack_location: remote
 #remote_jdk: "<URL_TO_JDK_FILE>"
 #remote_pack: "<URL_TO_APIM_ANALYTICS_PACK>"
 
 # JDK Distributions
 #jdk_name: jdk1.8.0_161
-jdk_name: jdk-11
+jdk_name: jdk1.8.0_251
 java_dir: /opt
 java_symlink: "/usr/bin/java"
 java_home: "{{ java_dir }}/{{ jdk_name }}"

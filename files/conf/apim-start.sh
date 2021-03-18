@@ -22,9 +22,9 @@ if [[ -z $heap_size ]]; then
     heap_size="2500"
 fi
 
-export JAVA_HOME="/opt/jdk-11"
+export JAVA_HOME="/opt/jdk1.8.0_251"
 
-apim_version=3.1.0
+apim_version=4.0.0-SNAPSHOT
 carbon_bootstrap_class=org.wso2.carbon.bootstrap.Bootstrap
 
 if pgrep -f "$carbon_bootstrap_class" > /dev/null; then

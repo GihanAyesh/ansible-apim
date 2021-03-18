@@ -24,7 +24,7 @@ backup_dir: /tmp
 misc_file_location: "{{ product_package_location }}/misc"
 misc_file_copy_location: "{{ target }}/misc"
 security_file_location: "{{ product_package_location }}/security"
-jdbc_driver: mysql-connector-java-5.1.48.jar
+jdbc_driver: mysql-connector-java-8.0.21.jar
 
 # Set backup_enabled to true to backup <carbon-home>/repository/deployment/server directory
 backup_enabled: false
@@ -54,24 +54,22 @@ lb_security_file_list:
 
 # Uncomment and add any miscellaneous files you need to copy
 # A sample is given below
-# misc_file_list:
-#   - { src: '{{ misc_file_location }}/apimcli.zip',
-#       dest: '{{ misc_file_copy_location }}/apimcli.zip' }
+misc_file_list:
+  - { src: '{{ misc_file_location }}/apictl-4.0.0-alpha2-linux-x64.tar.gz',
+      dest: '{{ misc_file_copy_location }}/apictl-4.0.0-alpha2-linux-x64.tar.gz' }
 
 # Set the location the product packages should reside in (eg: "local" in the /files directory, "remote" in a remote location)
-pack_location: local
-#pack_location: remote
+pack_location: remote
 #remote_jdk: "<URL_TO_JDK_FILE>"
-#remote_pack: "<URL_TO_APIM_PACK>"
+remote_pack: "https://wso2.org/jenkins/view/products/job/products/job/product-apim/lastStableBuild/org.wso2.am$wso2am/artifact/org.wso2.am/wso2am/4.0.0-SNAPSHOT/wso2am-4.0.0-SNAPSHOT.zip"
 
 # JDK Distributions
-#jdk_name: jdk1.8.0_161
-jdk_name: jdk-11
+jdk_name: jdk1.8.0_251
 java_dir: /opt
 java_symlink: "/usr/bin/java"
 java_home: "{{ java_dir }}/{{ jdk_name }}"
 
-deployment_mode: single # Single or HA
+deployment_mode: HA # Single or HA
 
 # Enable analytics for API Manager
 analytics_enabled: true
@@ -146,14 +144,16 @@ workflow_server_url: https://dev1.apimha.com:9445/services/
 # Datasource configurations
 wso2am_db_type: mysql
 wso2am_db_url: jdbc:mysql://db.apimha.com:3306/amdb?useSSL=false
-wso2am_db_username: amuser
-wso2am_db_password: Pass@123
+wso2am_db_username: wso2carbon
+wso2am_db_password: wso2carbon
+am_db_driver: com.mysql.cj.jdbc.Driver
 wso2am_db_validation_query: SELECT 1
 
 wso2shared_db_type: mysql
 wso2shared_db_url: jdbc:mysql://db.apimha.com:3306/sharedDB?useSSL=false
-wso2shared_db_username: amuser
-wso2shared_db_password: Pass@123
+wso2shared_db_username: wso2carbon
+wso2shared_db_password: wso2carbon
+wso2shared_db_driver: com.mysql.cj.jdbc.Driver
 wso2shared_db_validation_query: SELECT 1
 
 # Key Store and Trust Store configuration

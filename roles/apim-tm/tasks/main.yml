@@ -22,42 +22,51 @@
         carbon_home: "{{ target }}/apim-tm/{{ product_name }}-{{ product_version }}"
 
     # WSO2 Distribution
-    - name: Create product directory
-      file:
-        path: "{{ product_dir }}"
-        state: directory
-        mode: 0755
-
-    - name: Copy WSO2AM Trafficmanager service file
-      template:
-        src: wso2apim-tm.service.j2
-        dest: /etc/systemd/system/wso2apim-tm.service
-
-    - name: Stop wso2apim-tm as a service
-      systemd:
-        name: wso2apim-tm
-        state: stopped
-
-    - name: Remove existing setup
-      file:
-        path: "{{ carbon_home }}"
-        state: absent
-
-    - name: Copy Pack
-      copy:
-        src: "{{product_package_location}}/packs/{{ product_name }}-{{ product_version }}.zip"
-        dest: "{{ product_dir }}"
-
-    - name: Unzip WSO2 API Manager Package from remote source
-      unarchive:
-        src: "{{ product_dir }}/{{ product_name }}-{{ product_version }}.zip"
-        dest: "{{ product_dir }}/"
-        mode: u=rw,g=r,o=r
-        remote_src: yes
-
-    - name: Optimize for profile
-      command: "sh {{ carbon_home }}/bin/profileSetup.sh -Dprofile=traffic-manager"
-
+#    - name: Create product directory
+#      file:
+#        path: "{{ product_dir }}"
+#        state: directory
+#        mode: 0755
+#
+#    - name: Copy WSO2AM Trafficmanager service file
+#      template:
+#        src: wso2apim-tm.service.j2
+#        dest: /etc/systemd/system/wso2apim-tm.service
+#
+#    - name: Stop wso2apim-tm as a service
+#      systemd:
+#        name: wso2apim-tm
+#        state: stopped
+#
+#    - name: Remove existing setup
+#      file:
+#        path: "{{ carbon_home }}"
+#        state: absent
+#
+#    - name: Copy Pack
+#      copy:
+#        src: "{{product_package_location}}/packs/{{ product_name }}-{{ product_version }}.zip"
+#        dest: "{{ product_dir }}"
+#      when: pack_location == "local"
+#
+#    - name: Unzip WSO2 API Manager Package from local source
+#      unarchive:
+#        src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+#        dest: "{{ product_dir }}"
+#        mode: u=rw,g=r,o=r
+#      when: pack_location == "local"
+#
+#    - name: Unzip WSO2 API Manager Package from remote source
+#      unarchive:
+#        src: "{{ remote_pack }}"
+#        dest: "{{ product_dir }}"
+#        mode: u=rw,g=r,o=r
+#        remote_src: yes
+#      when: pack_location == "remote"
+#
+#    - name: Optimize for profile
+#      command: "sh {{ carbon_home }}/bin/profileSetup.sh -Dprofile=traffic-manager"
+#
     - name: Copy JDBC Driver
       copy:
         src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
@@ -69,20 +78,20 @@
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
       loop: "{{ config_files }}"
-
-    - name: Copy security file list for WSO2AM
-      copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop: "{{ security_file_list }}"
-      when: security_file_list is defined
-
-#    - name: Copy LB security file list for WSO2AM
+#
+#    - name: Copy security file list for WSO2AM
 #      copy:
 #        src: "{{ item.src }}"
 #        dest: "{{ item.dest }}"
-#      loop: "{{ lb_security_file_list }}"
-#      when: lb_security_file_list is defined
+#      loop: "{{ security_file_list }}"
+#      when: security_file_list is defined
+
+    - name: Copy LB security file list for WSO2AM
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ lb_security_file_list }}"
+      when: lb_security_file_list is defined
 
     - name: Change the owner of WSO2 directory
       file:

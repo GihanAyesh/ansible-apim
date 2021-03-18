@@ -17,19 +17,20 @@
 ---
 # This playbook deploys the whole application stack in this site.
 
-#- name: Apply common configuration to all nodes
-#  hosts:
-#    - node_1
-#    - node_2
-#  roles:
-#    - common
-
-- name: Apply API Manager Analytics worker configuration to an apim-analytics-worker node
+- name: Apply common configuration to all nodes
   hosts:
-    - apim-analytics_1
-    - apim-analytics_2
+    - node_1
+    - node_2
+    - node_3
   roles:
-    - apim-analytics
+    - common
+
+#- name: Apply API Manager Analytics worker configuration to an apim-analytics-worker node
+#  hosts:
+#    - apim-analytics_1
+#    - apim-analytics_2
+#  roles:
+#    - apim-analytics
 
 - name: Apply API Manager default configuration to an KM node
   hosts:

@@ -1,14 +1,14 @@
 
 apimHome=$2
 host=$3
-#./db_setup.sh mysql /Users/rukshan/wso2/apim/3.2.0/testing/target/h2/wso2am-3.2.0-SNAPSHOT db.apim.com
+#./db_setup.sh mysql wso2am-4.0.0-SNAPSHOT db.apimha.com
 
 
 
 echo "host $3"
 if [ "$1" = "mysql" ]; then
 echo "Using mysql"
-mysql -uamuser -pPass@123 -h$3<<EOF
+mysql -uroot -proot -h$3<<EOF
 	drop database if exists amdb;
 	create database amdb;
 	use amdb;
