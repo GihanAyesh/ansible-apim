@@ -60,19 +60,6 @@ traffic_manager_auth_urls=[{% for url in url_group['traffic_manager_auth_urls'] 
 
 {% endfor %}
 
-[apim.analytics]
-enable = "{{ analytics_enabled }}"
-username = "{{ analytics_username }}"
-password = "{{ analytics_password }}"
-store_api_url = "{{ stream_processor_rest_api_url }}"
-
-{% for url_group in analytics_url_group %}
-[[apim.analytics.url_group]]
-analytics_url =[{% for url in url_group['analytics_urls'] %}"{{ url }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
-analytics_auth_url =[{% for url in url_group['analytics_auth_urls'] %}"{{ url }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
-
-{% endfor %}
-
 [apim.cache.gateway_token]
 enable = true
 expiry_time = 15

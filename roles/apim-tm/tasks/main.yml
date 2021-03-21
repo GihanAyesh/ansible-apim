@@ -15,7 +15,7 @@
 #----------------------------------------------------------------------------
 ---
   - block:
-    # Set installation directory information
+#     Set installation directory information
     - name: Installation Information
       set_fact:
         product_dir: "{{ target }}/apim-tm"
@@ -67,17 +67,17 @@
 #    - name: Optimize for profile
 #      command: "sh {{ carbon_home }}/bin/profileSetup.sh -Dprofile=traffic-manager"
 #
-    - name: Copy JDBC Driver
-      copy:
-        src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
-        dest: "{{ carbon_home }}/repository/components/lib"
-      when: jdbc_driver is defined
-
-    - name: Copy configuration templates
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop: "{{ config_files }}"
+#    - name: Copy JDBC Driver
+#      copy:
+#        src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
+#        dest: "{{ carbon_home }}/repository/components/lib"
+#      when: jdbc_driver is defined
+#
+#    - name: Copy configuration templates
+#      template:
+#        src: "{{ item.src }}"
+#        dest: "{{ item.dest }}"
+#      loop: "{{ config_files }}"
 #
 #    - name: Copy security file list for WSO2AM
 #      copy:
@@ -85,13 +85,13 @@
 #        dest: "{{ item.dest }}"
 #      loop: "{{ security_file_list }}"
 #      when: security_file_list is defined
-
-    - name: Copy LB security file list for WSO2AM
-      copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop: "{{ lb_security_file_list }}"
-      when: lb_security_file_list is defined
+#
+#    - name: Copy LB security file list for WSO2AM
+#      copy:
+#        src: "{{ item.src }}"
+#        dest: "{{ item.dest }}"
+#      loop: "{{ lb_security_file_list }}"
+#      when: lb_security_file_list is defined
 
     - name: Change the owner of WSO2 directory
       file:

@@ -56,12 +56,6 @@ show_as_token_endpoint_url = true
 
 {% endfor %}
 
-[apim.analytics]
-enable = "{{ analytics_enabled }}"
-username = "{{ analytics_username }}"
-password = "{{ analytics_password }}"
-store_api_url = "{{ stream_processor_rest_api_url }}"
-
 [apim.cache.recent_apis]
 enable = false
 
@@ -86,13 +80,6 @@ required=true
 hidden=false
 name="External Reference Id"
 description="Sample description of the attribute"
-
-[apim.devportal.recommendations]
-recommendations_api = "{{ recommendations_api }}"
-consumer_key = "{{ recommendations_consumer_key }}"
-consumer_secret = "{{ recommendations_consumer_secret }}"
-wait_duration = 2
-apply_for_all_tenants = false
 
 [[event_handler]]
 name="userPostSelfRegistration"
