@@ -14,13 +14,13 @@
 #  limitations under the License.
 # ----------------------------------------------------------------------------
 
-wso2_group: wso2
-wso2_user: wso2carbon
+wso2_group: wso2 # OS group to be created
+wso2_user: wso2carbon # OS user for WSO2 services
 product_name: wso2am
 product_version: "{{ apim_version }}"
-target: /mnt
-product_package_location: files
-backup_dir: /tmp
+target: /mnt # Product installation directory
+product_package_location: files 
+backup_dir: /tmp # Artifact backup directory in the instance
 misc_file_location: "{{ product_package_location }}/misc"
 misc_file_copy_location: "{{ target }}/misc"
 security_file_location: "{{ product_package_location }}/security"
@@ -29,7 +29,7 @@ jdbc_driver: mysql-connector-java-8.0.21.jar
 # Set backup_enabled to true to backup <carbon-home>/repository/deployment/server directory
 backup_enabled: false
 
-# Performance tuning configurations
+# Performance tuning configurations for the operating system
 enable_performance_tuning: false
 performance_tuning_file_list:
   - { src: '{{ product_package_location }}/system/etc/sysctl.conf',
@@ -37,101 +37,101 @@ performance_tuning_file_list:
   - { src: '{{ product_package_location }}/system/etc/security/limits.conf',
       dest: '/etc/security/limits.conf' }
 
-# If custom keystores and trsustrores are need to be added, uncomment the below list
+# If custom primary keystores and trsustrores are need to be added, uncomment the below list
 # Add the required files under files/security/<product-home>/<path-to-file>
 # A sample is given below
-security_file_list:
- - { src: '{{ security_file_location }}/wso2am/client-truststore.jks',
-     dest: '{{ carbon_home }}/repository/resources/security/client-truststore.jks' }
- - { src: '{{ security_file_location }}/wso2am/wso2carbon.jks',
-     dest: '{{ carbon_home }}/repository/resources/security/wso2carbon.jks' }
+# security_file_list:
+#   - { src: '{{ security_file_location }}/wso2am/client-truststore.jks',
+#       dest: '{{ carbon_home }}/repository/resources/security/client-truststore.jks' }
+#   - { src: '{{ security_file_location }}/wso2am/wso2carbon.jks',
+#       dest: '{{ carbon_home }}/repository/resources/security/wso2carbon.jks' }
 
-lb_security_file_list:
- - { src: '{{ security_file_location }}/wso2am/wso2carbon.crt',
-     dest: '/home/ubuntu/keys/wso2carbon.crt' }
- - { src: '{{ security_file_location }}/wso2am/wso2carbon.key',
-     dest: '/home/ubuntu/keys//wso2carbon.key' }
-
-# Uncomment and add any miscellaneous files you need to copy
+# If custom tls keystore needs to be added, uncomment the below list
+# Add the required files under files/security/<product-home>/<path-to-file>
 # A sample is given below
+# security_file_list:
+#   - { src: '{{ security_file_location }}/wso2am/tls.jks',
+#       dest: '{{ carbon_home }}/repository/resources/security/tls.jks' }
+
+# If custom internal keystore needs to be added, uncomment the below list
+# Add the required files under files/security/<product-home>/<path-to-file>
+# A sample is given below
+# security_file_list:
+#   - { src: '{{ security_file_location }}/wso2am/internal.jks',
+#       dest: '{{ carbon_home }}/repository/resources/security/internal.jks' }
+
+#Add any miscellaneous files you need to copy
 misc_file_list:
   - { src: '{{ misc_file_location }}/apictl-4.0.0-alpha2-linux-x64.tar.gz',
       dest: '{{ misc_file_copy_location }}/apictl-4.0.0-alpha2-linux-x64.tar.gz' }
 
 # Set the location the product packages should reside in (eg: "local" in the /files directory, "remote" in a remote location)
+
+#pack_location: remote
 pack_location: remote
-#remote_jdk: "<URL_TO_JDK_FILE>"
 remote_pack: "https://wso2.org/jenkins/view/products/job/products/job/product-apim/lastStableBuild/org.wso2.am$wso2am/artifact/org.wso2.am/wso2am/4.0.0-SNAPSHOT/wso2am-4.0.0-SNAPSHOT.zip"
+#remote_jdk: "<URL_TO_JDK_FILE>" #This need to be enabled if JDK should be fetched from server
 
 # JDK Distributions
+setup_java_enabled: false #If this is set to false java_home variable below needs to be specified.
 jdk_name: jdk1.8.0_251
 java_dir: /opt
-java_symlink: "/usr/bin/java"
+java_symlink: "{{ java_dir }}/java"
 java_home: "{{ java_dir }}/{{ jdk_name }}"
 
-deployment_mode: HA # Single or HA
+deployment_mode: single # Single or HA
 
 # Enable analytics for API Manager
-analytics_enabled: true
-analytics_username: ${admin.username}
-analytics_password: ${admin.password}
-stream_processor_rest_api_url: https://analyticslb.apimha.com
+analytics_enabled: false
+stream_processor_username: ${admin.username} # Stream processor connection credentials
+stream_processor_password: ${admin.password} # Stream processor connection credentials
+stream_processor_rest_api_url: https://localhost:7444
+stream_processor_rest_api_username: ${admin.username}
+stream_processor_rest_api_password: ${admin.password}
 analytics_url_group:
   - analytics_urls:
-      - tcp://analytics1.apimha.com:7612
-      - tcp://analytics2.apimha.com:7612
+      - tcp://analytics1.local:7612
     analytics_auth_urls:
-      - ssl://analytics1.apimha.com:7712
-      - ssl://analytics2.apimha.com:7712
+      - ssl://analytics1.local:7712
+  - analytics_urls:
+      - tcp://analytics2.local:7612
+    analytics_auth_urls:
+      - ssl://analytics2.local:7712
 
 # Server URL of the Authentication service. Make sure to import the Key Manager's public certificate to WSO2 API-M's
 # client-truststore.jks. For more information, see https://docs.wso2.com/display/ADMIN44x/Creating+New+Keystores
-key_manager_server_url: https://kmlb.apimha.com/services/
+key_manager_server_url:  https://kmlb.apim.com/services/
 
 # API Store related configurations
-api_devportal_url: https://portals.apimha.com/devportal
-api_devportal_server_url: https://dev.apimha.com/services/
-oauth_configs_revoke_api_url: https://kmlb.apimha.com/oauth2/revoke
+api_devportal_url: https://localhost:${mgt.transport.https.port}/devportal
+api_devportal_server_url: https://localhost:${mgt.transport.https.port}${carbon.context}services/
+oauth_configs_revoke_api_url: https://kmlb.apim.com/oauth2/revoke
 
 # Gateway configurations
 gateway_environments:
   - { type: 'hybrid',
       name: 'Production and Sandbox',
       description: 'This is a hybrid gateway that handles both production and sandbox token traffic.',
-      service_url: 'https://gwlb.apimha.com/services/',
-      ws_endpoint: 'ws://gw1.apimha.com:9099',
-      wss_endpoint: 'wss://gw1.apimha.com:8099',
-      http_endpoint: 'http://apis.apimha.com',
-      https_endpoint: 'https://apis.apimha.com'
-  }
+      service_url: 'https://gwlb.apim.com/services/',
+      ws_endpoint: 'ws://gw.apim.com:9099',
+      wss_endpoint: 'wss://gw.apim.com:8099',
+      http_endpoint: 'http://localhost:${http.nio.port}',
+      https_endpoint: 'https://localhost:${https.nio.port}' }
 
 # Traffic Manager configurations
-throttle_config_policy_deployer_url: https://tmlb.apimha.com/services/
-
-notification_endpoint_url: https://tmlb.apimha.com
-
+traffic_manager_host_url: https://${carbon.local.ip}:${mgt.transport.https.port}
+traffic_manager_receiver_url: tcp://${carbon.local.ip}:${receiver.url.port}
+traffic_manager_auth_url: ssl://${carbon.local.ip}:${auth.url.port}
+throttle_config_policy_deployer_url: https://tmlb.apim.com/services/
+notification_endpoint_url: https://tmlb.apim.com
 throttle_decision_endpoints:
-  - tcp://tm1.apimha.com:5683
-  - tcp://tm2.apimha.com:5683
+  - tcp://tm.apim.com:5672
+  - tcp://tm.apim.com:5672
 throttling_url_group:
   - traffic_manager_urls:
-      - tcp://tm1.apimha.com:9622
+      - tcp://tm.apim.com:9611
     traffic_manager_auth_urls:
-      - ssl://tm1.apimha.com:9722
-  - traffic_manager_urls:
-      - tcp://tm2.apimha.com:9622
-    traffic_manager_auth_urls:
-      - ssl://tm2.apimha.com:9722
-
-# event hub
-eventhub_service_url: https://tm1.apimha.com:9454
-eventhub_decision_endpoints:
-  - tcp://tm1.apimha.com:5683
-eventhub_url_group:
-  - urls:
-      - tcp://tm1.apimha.com:9622
-    auth_urls:
-      - ssl://tm1.apimha.com:9722
+      - ssl://tm.apim.com:9722
 
 # Workflow configurations
 workflow_enable: "false"
@@ -139,22 +139,44 @@ workflow_service_url: https://localhost:9445/bpmn
 workflow_callback_endpoint: https://localhost:9443/api/am/publisher/v0.15/workflows/update-workflow-status
 workflow_token_endpoint: https://localhost:8243/token
 workflow_client_registration_endpoint: https://localhost:9443/client-registration/v0.15/register
-workflow_server_url: https://dev1.apimha.com:9445/services/
+workflow_server_url: https://apis.apim.com:9445/services/  #Developer Portal Service URL
+
+
+# event hub
+eventhub_service_url: https://tm.apim.com:9454
+eventhub_decision_endpoints:
+  - tcp://tm.apim.com:5683
+eventhub_url_group:
+  - urls:
+      - tcp://tm.apim.com:9622
+    auth_urls:
+      - ssl://tm.apim.com:9722
+
 
 # Datasource configurations
 wso2am_db_type: mysql
-wso2am_db_url: jdbc:mysql://db.apimha.com:3306/amdb?useSSL=false
+wso2am_db_url: jdbc:h2:./repository/database/WSO2AM_DB;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
 wso2am_db_username: wso2carbon
 wso2am_db_password: wso2carbon
-am_db_driver: com.mysql.cj.jdbc.Driver
-wso2am_db_validation_query: SELECT 1
+wso2am_db_driver: com.mysql.cj.jdbc.Driver
 
 wso2shared_db_type: mysql
-wso2shared_db_url: jdbc:mysql://db.apimha.com:3306/sharedDB?useSSL=false
+wso2shared_db_url: jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE
 wso2shared_db_username: wso2carbon
 wso2shared_db_password: wso2carbon
 wso2shared_db_driver: com.mysql.cj.jdbc.Driver
-wso2shared_db_validation_query: SELECT 1
+
+# Key Store and Trust Store configuration
+primary_key_store_name: wso2carbon.jks
+primary_key_store_password: wso2carbon
+primary_key_store_key_password: wso2carbon
+primary_key_store_key_alias: wso2carbon
+
+# The KeyStore which is used for encrypting/decrypting internal data. This block is read by Carbon Crypto Service
+internal_key_store_name: wso2carbon.jks
+internal_key_store_key_password: wso2carbon
+internal_key_store_password: wso2carbon
+internal_key_store_key_alias: wso2carbon
 
 # Key Store and Trust Store configuration
 key_store_location: wso2carbon.jks
@@ -162,20 +184,23 @@ key_store_password: wso2carbon
 key_store_key_password: wso2carbon
 key_store_key_alias: wso2carbon
 trust_store_location: client-truststore.jks
+trust_store_name: client-truststore.jks
 trust_store_password: wso2carbon
 
 # The KeyStore which is used for encrypting/decrypting internal data. This block is read by Carbon Crypto Service
-internal_keystore_location: wso2carbon.jks
-internal_keystore_key_password: wso2carbon
-internal_keystore_password: wso2carbon
-internal_keystore_key_alias: wso2carbon
+tls_key_store_name: wso2carbon.jks
+tls_key_store_key_password: wso2carbon
+tls_key_store_password: wso2carbon
+tls_key_store_key_alias: wso2carbon
+
+# If following is enabled all the sensitive information in server configurations will be encrypted. 
+secure_vault_enabled: false
 
 # Add any new changes you want to add for the group/profile below.
 # If you add a new file under templates and parameterized the file, the values for those parameters should be added
 # below. An example is provided below.
-# Changes applied to axis2.xml file.
 # clustering_enable: false
 
-recommendations_api: https://gateway.api.cloud.wso2.com/t/aiapis/recommendations/1.0.0
-recommendations_consumer_key: DIBSZ06vTMK243gtnXg9HnXXuKEa
-recommendations_consumer_secret: _bPR3V2uP2OzWnTFCr1MxaiZ3Qoa
+#recommendations_api: https://gateway.api.cloud.wso2.com/t/aiapis/recommendations/1.0.0
+#recommendations_consumer_key: DIBSZ06vTMK243gtnXg9HnXXuKEa
+#recommendations_consumer_secret: _bPR3V2uP2OzWnTFCr1MxaiZ3Qoa
