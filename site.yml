@@ -17,53 +17,29 @@
 ---
 # This playbook deploys the whole application stack in this site.
 
-- name: Apply common configuration to all nodes
-  hosts:
-    - node_1
-    - node_2
-    - node_3
-  roles:
-    - common
-
-#- name: Apply API Manager Analytics worker configuration to an apim-analytics-worker node
+#- name: Apply common configuration to all nodes
 #  hosts:
-#    - apim-analytics_1
-#    - apim-analytics_2
+#    - node_1
+#    - node_2
+#    - node_3
 #  roles:
-#    - apim-analytics
+#    - common
 
-- name: Apply API Manager default configuration to an KM node
-  hosts:
-    - apim-km_1
-    - apim-km_2
-  roles:
-    - apim-km
-
-- name: Apply API Manager default configuration to an TM node
+- name: Apply API Manager default configuration to a TM node
   hosts:
     - apim-tm_1
-    - apim-tm_2
   roles:
     - apim-tm
 
-- name: Apply API Manager default configuration to an Publisher node
+- name: Apply API Manager default configuration to an APIs node (KeyManager, Publisher and Dev Portal)
   hosts:
-    - apim-publisher_1
-    - apim-publisher_2
+    - apim-apis_1
   roles:
-    - apim-publisher
+    - apim
 
-- name: Apply API Manager default configuration to an Publisher node
-  hosts:
-    - apim-devportal_1
-    - apim-devportal_2
-  roles:
-    - apim-devportal
-
-- name: Apply API Manager default configuration to an Publisher node
+- name: Apply API Manager default configuration to Gateway node
   hosts:
     - apim-gateway_1
-    - apim-gateway_2
   roles:
     - apim-gateway
 
