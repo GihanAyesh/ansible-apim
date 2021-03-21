@@ -8,25 +8,17 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
 
-44.192.38.37    db.apimha.com
-44.192.38.37    apis.apimha.com
-44.192.38.37    tmlb.apimha.com
-44.192.38.37    kmlb.apimha.com
-44.192.38.37    gwlb.apimha.com
+44.192.38.37    db.apim.com
+44.192.38.37    tmlb.apim.com
+44.192.38.37    apislb.apim.com
+44.192.38.37    gwlb.apim.com
 
-3.91.31.82    tm1.apimha.com
-3.91.31.82    km1.apimha.com
-3.91.31.82    pub1.apimha.com
-3.91.31.82    dev1.apimha.com
-3.91.31.82    gw1.apimha.com
+3.91.31.82      apis.apim.com
 
-3.89.231.81   tm2.apimha.com
-3.89.231.81   km2.apimha.com
-3.89.231.81   pub2.apimha.com
-3.89.231.81   dev2.apimha.com
-3.89.231.81   gw2.apimha.com
+3.89.231.81     tm.apim.com
+3.89.231.81     gw.apim.com
 
-3.91.31.82    node1.apimha.com
-3.89.231.81   node2.apimha.com
-44.192.38.37  node3.apimha.com
+3.91.31.82      node1.apim.com
+3.89.231.81     node2.apim.com
+44.192.38.37    node3.apim.com
 
