@@ -16,16 +16,10 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 .
 ├── dev
 │   ├── group_vars
-│   │   ├── apim-analytics.yml
 │   │   └── apim.yml
 │   ├── host_vars
-│   │   ├── apim_1.yml
-│   │   ├── apim-analytics-dashboard_1.yml
-│   │   ├── apim-analytics-worker_1.yml
+│   │   ├── apim-apis_1.yml
 │   │   ├── apim-gateway_1.yml
-│   │   ├── apim-km_1.yml
-│   │   ├── apim-publisher_1.yml
-│   │   ├── apim-devportal_1.yml
 │   │   └── apim-tm_1.yml
 │   └── inventory
 ├── docs
@@ -45,8 +39,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   ├── lib
 │   │   ├── amazon-corretto-8-x64-linux-jdk.tar.gz
 │   └── packs
-│   │   ├── wso2am-3.2.0.zip
-│   │   ├── wso2am-analytics-3.2.0.zip
+│   │   ├── wso2am-4.0.0.zip
 │   ├── system
 │   │   └── etc
 │   │       ├── security
@@ -61,22 +54,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   ├── apim
 │   │   ├── tasks
 │   │   └── templates
-│   ├── apim-analytics-dashboard
-│   │   ├── tasks
-│   │   └── templates
-│   ├── apim-analytics-worker
-│   │   ├── tasks
-│   │   └── templates
 │   ├── apim-gateway
-│   │   ├── tasks
-│   │   └── templates
-│   ├── apim-km
-│   │   ├── tasks
-│   │   └── templates
-│   ├── apim-publisher
-│   │   ├── tasks
-│   │   └── templates
-│   ├── apim-devportal
 │   │   ├── tasks
 │   │   └── templates
 │   ├── apim-tm
@@ -86,6 +64,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │       └── tasks
 ├── scripts
 │   ├── update.sh
+|   ├── db_setup.sh
 │   └── update_README.md
 └── site.yml
 

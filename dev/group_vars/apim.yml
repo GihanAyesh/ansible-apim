@@ -66,8 +66,6 @@ misc_file_list:
       dest: '{{ misc_file_copy_location }}/apictl-4.0.0-alpha2-linux-x64.tar.gz' }
 
 # Set the location the product packages should reside in (eg: "local" in the /files directory, "remote" in a remote location)
-
-#pack_location: remote
 pack_location: remote
 remote_pack: "https://wso2.org/jenkins/view/products/job/products/job/product-apim/lastStableBuild/org.wso2.am$wso2am/artifact/org.wso2.am/wso2am/4.0.0-SNAPSHOT/wso2am-4.0.0-SNAPSHOT.zip"
 #remote_jdk: "<URL_TO_JDK_FILE>" #This need to be enabled if JDK should be fetched from server
@@ -80,23 +78,6 @@ java_symlink: "{{ java_dir }}/java"
 java_home: "{{ java_dir }}/{{ jdk_name }}"
 
 deployment_mode: single # Single or HA
-
-## Enable analytics for API Manager
-#analytics_enabled: false
-#stream_processor_username: ${admin.username} # Stream processor connection credentials
-#stream_processor_password: ${admin.password} # Stream processor connection credentials
-#stream_processor_rest_api_url: https://localhost:7444
-#stream_processor_rest_api_username: ${admin.username}
-#stream_processor_rest_api_password: ${admin.password}
-#analytics_url_group:
-#  - analytics_urls:
-#      - tcp://analytics1.local:7612
-#    analytics_auth_urls:
-#      - ssl://analytics1.local:7712
-#  - analytics_urls:
-#      - tcp://analytics2.local:7612
-#    analytics_auth_urls:
-#      - ssl://analytics2.local:7712
 
 # Server URL of the Authentication service. Make sure to import the Key Manager's public certificate to WSO2 API-M's
 # client-truststore.jks. For more information, see https://docs.wso2.com/display/ADMIN44x/Creating+New+Keystores
