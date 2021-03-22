@@ -14,7 +14,7 @@ server {
         proxy_set_header X-Forwarded-Port 443;
         ssl on;
 
-        server_name analyticslb.apimha.com;
+        server_name tmlb.apimha.com;
 
         location / {
                 proxy_set_header X-Forwarded-Host $host;
@@ -23,7 +23,7 @@ server {
                 proxy_set_header Host $http_host;
                 proxy_read_timeout 5m;
                 proxy_send_timeout 5m;
-                proxy_pass https://analytics.store.apimha.com;
+                proxy_pass https://tm.apim.com;
         }
 }
 

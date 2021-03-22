@@ -12,11 +12,19 @@ username = "{{ admin_username }}"
 password = "{{ admin_password }}"
 create_admin_account = true
 
+[database.apim_db]
+type = "{{ wso2am_db_type }}"
+url = "{{ wso2am_db_url }}"
+username = "{{ wso2am_db_username }}"
+password = "{{ wso2am_db_password }}"
+driver = "{{ wso2am_db_driver }}"
+
 [database.shared_db]
 type = "{{ wso2shared_db_type }}"
 url = "{{ wso2shared_db_url }}"
 username = "{{ wso2shared_db_username }}"
 password = "{{ wso2shared_db_password }}"
+driver = "{{ wso2shared_db_driver }}"
 
 [keystore.tls]
 file_name =  "{{ key_store_location }}"
@@ -81,9 +89,3 @@ allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
 allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "testKey"]
 allow_credentials = false
 
-[apim.sync_runtime_artifacts.gateway]
-gateway_labels =["Production and Sandbox"]
-artifact_retriever = "DBRetriever"
-deployment_retry_duration = 15000
-data_retrieval_mode = "sync"
-event_waiting_time = 5000

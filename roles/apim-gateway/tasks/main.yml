@@ -20,8 +20,8 @@
       set_fact:
         product_dir: "{{ target }}/apim-gateway"
         carbon_home: "{{ target }}/apim-gateway/{{ product_name }}-{{ product_version }}"
-#
-#    # WSO2 Distribution
+
+    # WSO2 Distribution
 #    - name: Create product directory
 #      file:
 #        path: "{{ product_dir }}"

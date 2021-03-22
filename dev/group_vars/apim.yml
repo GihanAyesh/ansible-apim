@@ -81,49 +81,49 @@ java_home: "{{ java_dir }}/{{ jdk_name }}"
 
 deployment_mode: single # Single or HA
 
-# Enable analytics for API Manager
-analytics_enabled: false
-stream_processor_username: ${admin.username} # Stream processor connection credentials
-stream_processor_password: ${admin.password} # Stream processor connection credentials
-stream_processor_rest_api_url: https://localhost:7444
-stream_processor_rest_api_username: ${admin.username}
-stream_processor_rest_api_password: ${admin.password}
-analytics_url_group:
-  - analytics_urls:
-      - tcp://analytics1.local:7612
-    analytics_auth_urls:
-      - ssl://analytics1.local:7712
-  - analytics_urls:
-      - tcp://analytics2.local:7612
-    analytics_auth_urls:
-      - ssl://analytics2.local:7712
+## Enable analytics for API Manager
+#analytics_enabled: false
+#stream_processor_username: ${admin.username} # Stream processor connection credentials
+#stream_processor_password: ${admin.password} # Stream processor connection credentials
+#stream_processor_rest_api_url: https://localhost:7444
+#stream_processor_rest_api_username: ${admin.username}
+#stream_processor_rest_api_password: ${admin.password}
+#analytics_url_group:
+#  - analytics_urls:
+#      - tcp://analytics1.local:7612
+#    analytics_auth_urls:
+#      - ssl://analytics1.local:7712
+#  - analytics_urls:
+#      - tcp://analytics2.local:7612
+#    analytics_auth_urls:
+#      - ssl://analytics2.local:7712
 
 # Server URL of the Authentication service. Make sure to import the Key Manager's public certificate to WSO2 API-M's
 # client-truststore.jks. For more information, see https://docs.wso2.com/display/ADMIN44x/Creating+New+Keystores
-key_manager_server_url:  https://kmlb.apim.com/services/
+key_manager_server_url:  https://apis.apim.com:${mgt.transport.https.port}/services/
 
 # API Store related configurations
-api_devportal_url: https://localhost:${mgt.transport.https.port}/devportal
-api_devportal_server_url: https://localhost:${mgt.transport.https.port}${carbon.context}services/
-oauth_configs_revoke_api_url: https://kmlb.apim.com/oauth2/revoke
+api_devportal_url: https://apis.apim.com:${mgt.transport.https.port}/devportal
+api_devportal_server_url: https://apis.apim.com:${mgt.transport.https.port}${carbon.context}services/
+oauth_configs_revoke_api_url: https://apis.apim.com/oauth2/revoke
 
 # Gateway configurations
 gateway_environments:
   - { type: 'hybrid',
       name: 'Production and Sandbox',
       description: 'This is a hybrid gateway that handles both production and sandbox token traffic.',
-      service_url: 'https://gwlb.apim.com/services/',
+      service_url: 'https://gw.apim.com/services/',
       ws_endpoint: 'ws://gw.apim.com:9099',
       wss_endpoint: 'wss://gw.apim.com:8099',
       http_endpoint: 'http://localhost:${http.nio.port}',
       https_endpoint: 'https://localhost:${https.nio.port}' }
 
 # Traffic Manager configurations
-traffic_manager_host_url: https://${carbon.local.ip}:${mgt.transport.https.port}
-traffic_manager_receiver_url: tcp://${carbon.local.ip}:${receiver.url.port}
-traffic_manager_auth_url: ssl://${carbon.local.ip}:${auth.url.port}
-throttle_config_policy_deployer_url: https://tmlb.apim.com/services/
-notification_endpoint_url: https://tmlb.apim.com
+traffic_manager_host_url: https://tm.apim.com:${mgt.transport.https.port}
+traffic_manager_receiver_url: tcp://tm.apim.com:${receiver.url.port}
+traffic_manager_auth_url: ssl://tm.apim.com:${auth.url.port}
+throttle_config_policy_deployer_url: https://tm.apim.com/services/
+notification_endpoint_url: https://tm.apim.com
 throttle_decision_endpoints:
   - tcp://tm.apim.com:5672
   - tcp://tm.apim.com:5672
@@ -135,10 +135,10 @@ throttling_url_group:
 
 # Workflow configurations
 workflow_enable: "false"
-workflow_service_url: https://localhost:9445/bpmn
-workflow_callback_endpoint: https://localhost:9443/api/am/publisher/v0.15/workflows/update-workflow-status
-workflow_token_endpoint: https://localhost:8243/token
-workflow_client_registration_endpoint: https://localhost:9443/client-registration/v0.15/register
+workflow_service_url: https://apis.apim.com:9445/bpmn
+workflow_callback_endpoint: https://apis.apim.com:9443/api/am/publisher/v0.15/workflows/update-workflow-status
+workflow_token_endpoint: https://apis.apim.com:8243/token
+workflow_client_registration_endpoint: https://apis.apim.com:9443/client-registration/v0.15/register
 workflow_server_url: https://apis.apim.com:9445/services/  #Developer Portal Service URL
 
 
@@ -155,13 +155,13 @@ eventhub_url_group:
 
 # Datasource configurations
 wso2am_db_type: mysql
-wso2am_db_url: jdbc:h2:./repository/database/WSO2AM_DB;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+wso2am_db_url: jdbc:mysql://db.apim.com:3306/WSO2AM_DB?useSSL=false
 wso2am_db_username: wso2carbon
 wso2am_db_password: wso2carbon
 wso2am_db_driver: com.mysql.cj.jdbc.Driver
 
 wso2shared_db_type: mysql
-wso2shared_db_url: jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE
+wso2shared_db_url: jdbc:mysql://db.apim.com:3306/WSO2SHARED_DB?useSSL=false
 wso2shared_db_username: wso2carbon
 wso2shared_db_password: wso2carbon
 wso2shared_db_driver: com.mysql.cj.jdbc.Driver

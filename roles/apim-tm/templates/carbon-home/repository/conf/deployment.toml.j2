@@ -17,12 +17,14 @@ type = "{{ wso2am_db_type }}"
 url = "{{ wso2am_db_url }}"
 username = "{{ wso2am_db_username }}"
 password = "{{ wso2am_db_password }}"
+driver = "{{ wso2am_db_driver }}"
 
 [database.shared_db]
 type = "{{ wso2shared_db_type }}"
 url = "{{ wso2shared_db_url }}"
 username = "{{ wso2shared_db_username }}"
 password = "{{ wso2shared_db_password }}"
+driver = "{{ wso2shared_db_driver }}"
 
 [keystore.tls]
 file_name =  "{{ key_store_location }}"

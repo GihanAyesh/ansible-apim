@@ -20,12 +20,14 @@ type = "{{ wso2am_db_type }}"
 url = "{{ wso2am_db_url }}"
 username = "{{ wso2am_db_username }}"
 password = "{{ wso2am_db_password }}"
+driver = "{{ wso2am_db_driver }}"
 
 [database.shared_db]
 type = "{{ wso2shared_db_type }}"
 url = "{{ wso2shared_db_url }}"
 username = "{{ wso2shared_db_username }}"
 password = "{{ wso2shared_db_password }}"
+driver = "{{ wso2shared_db_driver }}"
 
 [keystore.tls]
 file_name =  "{{ key_store_location }}"
@@ -90,6 +92,7 @@ service_url = "{{ key_manager_server_url }}"
 username= "$ref{super_admin.username}"
 password= "$ref{super_admin.password}"
 
+
 # Traffic Manager configurations
 [apim.throttling]
 username= "$ref{super_admin.username}"
@@ -101,4 +104,16 @@ throttle_decision_endpoints = [{% for endpoint in throttle_decision_endpoints %}
 traffic_manager_urls=[{% for url in url_group['traffic_manager_urls'] %}"{{ url }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
 traffic_manager_auth_urls=[{% for url in url_group['traffic_manager_auth_urls'] %}"{{ url }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
 {% endfor %}
+
+[[event_listener]]
+id = "token_revocation"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.is.notification.ApimOauthEventInterceptor"
+order = 1
+
+[event_listener.properties]
+notification_endpoint = "https://tm.apim.com:${mgt.transport.https.port}/internal/data/v1/notify"
+username = "${admin.username}"
+password = "${admin.password}"
+'header.X-WSO2-KEY-MANAGER' = "default"
 

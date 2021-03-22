@@ -23,7 +23,7 @@ server {
                 proxy_set_header Host $http_host;
                 proxy_read_timeout 5m;
                 proxy_send_timeout 5m;
-                proxy_pass https://api.gw.apimha.com;
+                proxy_pass https://api.gw.apim.com;
         }
 }
 

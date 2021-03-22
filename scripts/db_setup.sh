@@ -5,19 +5,20 @@ host=$3
 
 
 
-echo "host $3"
+echo "Connecting to host $3"
 if [ "$1" = "mysql" ]; then
 echo "Using mysql"
-mysql -uroot -proot -h$3<<EOF
-	drop database if exists amdb;
-	create database amdb;
-	use amdb;
+echo "Connecting to MySQL using $4"
+mysql -u$4 -p$5 -h$3<<EOF
+	drop database if exists WSO2AM_DB;
+	create database WSO2AM_DB;
+	use WSO2AM_DB;
 	source $apimHome/dbscripts/apimgt/mysql.sql;
     SET GLOBAL max_connections = 5000;
 
-	drop database if exists sharedDB;
-	create database sharedDB;
-	use sharedDB;
+	drop database if exists WSO2SHARED_DB;
+	create database WSO2SHARED_DB;
+	use WSO2SHARED_DB;
 	source $apimHome/dbscripts/mysql.sql;
     SET GLOBAL max_connections = 5000;
 
