@@ -1,6 +1,6 @@
 [server]
 hostname = "{{ hostname }}"
-node_ip = "127.0.0.1"
+node_ip = "0.0.0.0"
 server_role = "traffic-manager"
 offset = "{{ ports_offset }}"
 
@@ -47,6 +47,5 @@ revoke_endpoint = "{{ oauth_configs_revoke_api_url }}"
 enable_token_encryption = false
 enable_token_hashing = false
 
-[oauth.oidc.id_token]
-issuer = "https://apim.am.wso2.com/oauth2/token"
+
 

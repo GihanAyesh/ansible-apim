@@ -18,8 +18,8 @@
 # NOTE: The parameterized values has the default values from the original pack. Please change them according to your
 # requirements. If you need to add additional configurations, please use the custom.yml under each role.
 
-hostname: localhost
-ports_offset: 0
+hostname: apislb.apim.com
+ports_offset: 12
 
 # User manager configurations
 admin_username: admin

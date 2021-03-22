@@ -22,69 +22,69 @@
         carbon_home: "{{ target }}/apim-gateway/{{ product_name }}-{{ product_version }}"
 
     # WSO2 Distribution
-#    - name: Create product directory
-#      file:
-#        path: "{{ product_dir }}"
-#        state: directory
-#        mode: 0755
-#
-#    - name: "Copy WSO2AM Gateway service file"
-#      template:
-#        src: wso2apim-gateway.service.j2
-#        dest: /etc/systemd/system/wso2apim-gateway.service
-#
-#    - name: Stop wso2apim as a service
-#      systemd:
-#        name: wso2apim-gateway
-#        state: stopped
-#
-#    - name: Remove existing setup
-#      file:
-#        path: "{{ carbon_home }}"
-#        state: absent
-#
-#    - name: Copy Pack
-#      copy:
-#        src: "{{product_package_location}}/packs/{{ product_name }}-{{ product_version }}.zip"
-#        dest: "{{ product_dir }}"
-#      when: pack_location == "local"
-#
-#    - name: Unzip WSO2 API Manager Package from local source
-#      unarchive:
-#        src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
-#        dest: "{{ product_dir }}"
-#        mode: u=rw,g=r,o=r
-#      when: pack_location == "local"
-#
-#    - name: Unzip WSO2 API Manager Package from remote source
-#      unarchive:
-#        src: "{{ remote_pack }}"
-#        dest: "{{ product_dir }}"
-#        mode: u=rw,g=r,o=r
-#        remote_src: yes
-#      when: pack_location == "remote"
-#
-#    - name: Optimize for profile
-#      command: "sh {{ carbon_home }}/bin/profileSetup.sh -Dprofile=gateway-worker"
-#
-#    - name: Copy JDBC Driver
-#      copy:
-#        src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
-#        dest: "{{ carbon_home }}/repository/components/lib"
-#      when: jdbc_driver is defined
-#
-#    - name: Copy configuration templates
-#      template:
-#        src: "{{ item.src }}"
-#        dest: "{{ item.dest }}"
-#      loop: "{{ config_files }}"
-#
-#    - name: Copy security file list for WSO2AM
-#      copy:
-#        src: "{{ item.src }}"
-#        dest: "{{ item.dest }}"
-#      loop: "{{ security_file_list }}"
-#      when: security_file_list is defined
+    - name: Create product directory
+      file:
+        path: "{{ product_dir }}"
+        state: directory
+        mode: 0755
+
+    - name: "Copy WSO2AM Gateway service file"
+      template:
+        src: wso2apim-gateway.service.j2
+        dest: /etc/systemd/system/wso2apim-gateway.service
+
+    - name: Stop wso2apim as a service
+      systemd:
+        name: wso2apim-gateway
+        state: stopped
+
+    - name: Remove existing setup
+      file:
+        path: "{{ carbon_home }}"
+        state: absent
+
+    - name: Copy Pack
+      copy:
+        src: "{{product_package_location}}/packs/{{ product_name }}-{{ product_version }}.zip"
+        dest: "{{ product_dir }}"
+      when: pack_location == "local"
+
+    - name: Unzip WSO2 API Manager Package from local source
+      unarchive:
+        src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+        dest: "{{ product_dir }}"
+        mode: u=rw,g=r,o=r
+      when: pack_location == "local"
+
+    - name: Unzip WSO2 API Manager Package from remote source
+      unarchive:
+        src: "{{ remote_pack }}"
+        dest: "{{ product_dir }}"
+        mode: u=rw,g=r,o=r
+        remote_src: yes
+      when: pack_location == "remote"
+
+    - name: Optimize for profile
+      command: "sh {{ carbon_home }}/bin/profileSetup.sh -Dprofile=gateway-worker"
+
+    - name: Copy JDBC Driver
+      copy:
+        src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
+        dest: "{{ carbon_home }}/repository/components/lib"
+      when: jdbc_driver is defined
+
+    - name: Copy configuration templates
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ config_files }}"
+
+    - name: Copy security file list for WSO2AM
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ security_file_list }}"
+      when: security_file_list is defined
 
     - name: Change the owner of WSO2 directory
       file:
