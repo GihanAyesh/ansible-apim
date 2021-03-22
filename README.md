@@ -78,8 +78,7 @@ Packs could be either copied to a local directory, or downloaded from a remote l
 
 Copy the following files to `files/packs` directory.
 
-1. [WSO2 API Manager 3.2.0 package](https://wso2.com/api-management/install/)
-2. [WSO2 API Manager Analytics 3.2.0 package](https://wso2.com/api-management/install/analytics/)
+1. [WSO2 API Manager 4.0.0 package](https://wso2.org/jenkins/view/products/job/products/job/product-apim/lastStableBuild/org.wso2.am$wso2am/artifact/org.wso2.am/wso2am/4.0.0-SNAPSHOT/wso2am-4.0.0-SNAPSHOT.zip)
 
 Copy the following files to `files/lib` directory.
 
@@ -107,7 +106,7 @@ Update the hostname in dev/host_vars/apim_1.yml with ansible_host, 172.28.128.4
 
 Run the following command to run the scripts.
 
-`ansible-playbook -i dev site.yml`
+`ansible-playbook -i dev site.yml --extra-vars "apim_version=4.0.0-SNAPSHOT"`
 
 If you need to alter the configurations given, please change the parameterized values in the yaml files under `group_vars` and `host_vars`.
 
@@ -146,6 +145,6 @@ System files that will be updated when performance tuning are enabled is availab
 
 The master branch of this repository contains the latest product version with the latest Ansible version. The Ansible resources for previous Ansible versions can be found in the branches. The following is an example.
 
-#### Ansible resources for API Manager 3.1.0
+#### Ansible resources for API Manager 3.2.0
 
-Branch name: 3.1.x
+Branch name: 3.2.x

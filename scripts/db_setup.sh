@@ -1,7 +1,7 @@
 
 apimHome=$2
 host=$3
-#./db_setup.sh mysql wso2am-4.0.0-SNAPSHOT db.apimha.com
+#./db_setup.sh mysql wso2am-4.0.0-SNAPSHOT db.apim.com wso2user wso2carbon
 
 
 
