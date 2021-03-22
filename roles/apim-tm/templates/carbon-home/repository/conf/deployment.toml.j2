@@ -1,6 +1,6 @@
 [server]
 hostname = "{{ hostname }}"
-node_ip = "0.0.0.0"
+node_ip = "127.0.0.1"
 server_role = "traffic-manager"
 offset = "{{ ports_offset }}"
 
@@ -8,35 +8,49 @@ offset = "{{ ports_offset }}"
 type = "database_unique_id"
 
 [super_admin]
-username = "{{ admin_username }}"
-password = "{{ admin_password }}"
+username = "{% if secure_vault_enabled|bool %}$secret{admin_username}{% else %}{{ admin_username }}{% endif %}"
+password = "{% if secure_vault_enabled|bool %}$secret{admin_password}{% else %}{{ admin_password }}{% endif %}"
 create_admin_account = true
 
 [database.apim_db]
 type = "{{ wso2am_db_type }}"
 url = "{{ wso2am_db_url }}"
-username = "{{ wso2am_db_username }}"
-password = "{{ wso2am_db_password }}"
+username = "{% if secure_vault_enabled|bool %}$secret{wso2am_db_username}{% else %}{{ wso2am_db_username }}{% endif %}"
+password = "{% if secure_vault_enabled|bool %}$secret{wso2am_db_password}{% else %}{{ wso2am_db_password }}{% endif %}"
 driver = "{{ wso2am_db_driver }}"
 
 [database.shared_db]
 type = "{{ wso2shared_db_type }}"
 url = "{{ wso2shared_db_url }}"
-username = "{{ wso2shared_db_username }}"
-password = "{{ wso2shared_db_password }}"
+username = "{% if secure_vault_enabled|bool %}$secret{wso2shared_db_username}{% else %}{{ wso2shared_db_username }}{% endif %}"
+password = "{% if secure_vault_enabled|bool %}$secret{wso2shared_db_password}{% else %}{{ wso2shared_db_password }}{% endif %}"
 driver = "{{ wso2shared_db_driver }}"
 
 [keystore.tls]
-file_name =  "{{ key_store_location }}"
+file_name =  "{{ tls_key_store_name }}"
 type =  "JKS"
-password =  "{{ key_store_password }}"
-alias =  "{{ key_store_key_alias }}"
-key_password =  "{{ key_store_key_password }}"
+password =  "{% if secure_vault_enabled|bool %}$secret{tls_key_store_password}{% else %}{{ tls_key_store_password }}{% endif %}"
+alias =  "{{ tls_key_store_key_alias }}"
+key_password =  "{% if secure_vault_enabled|bool %}$secret{tls_key_store_key_password}{% else %}{{ tls_key_store_key_password }}{% endif %}"
+
+[keystore.primary]
+file_name =  "{{ primary_key_store_name }}"
+type =  "JKS"
+password =  "{% if secure_vault_enabled|bool %}$secret{primary_key_store_password}{% else %}{{ primary_key_store_password }}{% endif %}"
+alias =  "{{ primary_key_store_key_alias }}"
+key_password =  "{% if secure_vault_enabled|bool %}$secret{primary_key_store_key_password}{% else %}{{ primary_key_store_key_password }}{% endif %}"
+
+[keystore.internal]
+file_name =  "{{ internal_key_store_name }}"
+type =  "JKS"
+password =  "{% if secure_vault_enabled|bool %}$secret{internal_key_store_password}{% else %}{{ internal_key_store_password }}{% endif %}"
+alias =  "{{ internal_key_store_key_alias }}"
+key_password =  "{% if secure_vault_enabled|bool %}$secret{internal_key_store_key_password}{% else %}{{ internal_key_store_key_password }}{% endif %}"
 
 [truststore]
-file_name = "{{ trust_store_location }}"
+file_name = "{{ trust_store_name }}"
 type = "JKS"
-password = "wso2carbon"
+password = "{% if secure_vault_enabled|bool %}$secret{trust_store_password}{% else %}{{ trust_store_password }}{% endif %}"
 
 # key manager implementation
 [apim.key_manager]
@@ -46,6 +60,28 @@ service_url = "{{ key_manager_server_url }}"
 revoke_endpoint = "{{ oauth_configs_revoke_api_url }}"
 enable_token_encryption = false
 enable_token_hashing = false
+
+{% if tm_event_duplicate_url is defined %}
+[apim.throttling]
+event_duplicate_url = ["{{ tm_event_duplicate_url }}"]
+{% endif %}
+
+
+{% if secure_vault_enabled|bool %}
+[secrets]
+admin_password = "[{{ admin_password }}]"
+wso2am_db_username = "[{{ wso2am_db_username }}]"
+wso2am_db_password = "[{{ wso2am_db_password }}]"
+wso2shared_db_username = "[{{ wso2shared_db_username }}]"
+wso2shared_db_password = "[{{ wso2shared_db_password }}]"
+primary_key_store_password = "[{{ primary_key_store_password }}]"
+primary_key_store_key_password = "[{{ primary_key_store_key_password }}]"
+trust_store_password = "[{{ trust_store_password }}]"
+internal_key_store_key_password = "[{{ internal_key_store_key_password }}]"
+internal_key_store_password = "[{{ internal_key_store_password }}]"
+tls_key_store_key_password = "[{{ tls_key_store_key_password }}]"
+tls_key_store_password = "[{{ tls_key_store_password }}]"
+{% endif %}
 
 
 
