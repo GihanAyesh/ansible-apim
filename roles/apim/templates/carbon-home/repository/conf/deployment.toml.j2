@@ -23,14 +23,14 @@ type = "{{ wso2am_db_type }}"
 url = "{{ wso2am_db_url }}"
 username = "{% if secure_vault_enabled|bool %}$secret{wso2am_db_username}{% else %}{{ wso2am_db_username }}{% endif %}"
 password = "{% if secure_vault_enabled|bool %}$secret{wso2am_db_password}{% else %}{{ wso2am_db_password }}{% endif %}"
-driver = "{{ wso2am_db_driver }}"
+
 
 [database.shared_db]
 type = "{{ wso2shared_db_type }}"
 url = "{{ wso2shared_db_url }}"
 username = "{% if secure_vault_enabled|bool %}$secret{wso2shared_db_username}{% else %}{{ wso2shared_db_username }}{% endif %}"
 password = "{% if secure_vault_enabled|bool %}$secret{wso2shared_db_password}{% else %}{{ wso2shared_db_password }}{% endif %}"
-driver = "{{ wso2shared_db_driver }}"
+
 
 [keystore.tls]
 file_name =  "{{ tls_key_store_name }}"
@@ -253,7 +253,6 @@ sp_name_regex = "^[\\sa-zA-Z0-9._-]*$"
 service_url = "{{ key_manager_server_url }}"
 username= "$ref{super_admin.username}"
 password= "$ref{super_admin.password}"
-
 
 # Traffic Manager configurations
 [apim.throttling]

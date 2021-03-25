@@ -17,14 +17,14 @@ type = "{{ wso2am_db_type }}"
 url = "{{ wso2am_db_url }}"
 username = "{% if secure_vault_enabled|bool %}$secret{wso2am_db_username}{% else %}{{ wso2am_db_username }}{% endif %}"
 password = "{% if secure_vault_enabled|bool %}$secret{wso2am_db_password}{% else %}{{ wso2am_db_password }}{% endif %}"
-driver = "{{ wso2am_db_driver }}"
+
 
 [database.shared_db]
 type = "{{ wso2shared_db_type }}"
 url = "{{ wso2shared_db_url }}"
 username = "{% if secure_vault_enabled|bool %}$secret{wso2shared_db_username}{% else %}{{ wso2shared_db_username }}{% endif %}"
 password = "{% if secure_vault_enabled|bool %}$secret{wso2shared_db_password}{% else %}{{ wso2shared_db_password }}{% endif %}"
-driver = "{{ wso2shared_db_driver }}"
+
 
 [keystore.tls]
 file_name =  "{{ tls_key_store_name }}"
@@ -116,6 +116,11 @@ proxyPort = {{ gw_https_proxy_port }}
 [transport.passthru_https.sender.parameters]
 HostnameVerifier = "AllowAll"
 
+[apim.analytics]
+enable = true
+config_endpoint = "https://analytics-event-auth.st.choreo.dev/auth/v1"
+auth_token = "3e569596-bdc1-4dc9-b4dc-38fa2c399622"
+
 {% if secure_vault_enabled|bool %}
 [secrets]
 admin_password = "[{{ admin_password }}]"
@@ -131,10 +136,3 @@ internal_key_store_password = "[{{ internal_key_store_password }}]"
 tls_key_store_key_password = "[{{ tls_key_store_key_password }}]"
 tls_key_store_password = "[{{ tls_key_store_password }}]"
 {% endif %}
-
-[apim.analytics]
-enable = true
-config_endpoint = "https://analytics-event-auth.st.choreo.dev/auth/v1"
-auth_token = "3e569596-bdc1-4dc9-b4dc-38fa2c399622"
-
-

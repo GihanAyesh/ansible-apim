@@ -135,6 +135,12 @@ Add the configurations to the `custom.yml`. A sample is given below.
 
 Follow the steps mentioned under `docs` directory to customize/create new Ansible scripts and deploy the recommended patterns.
 
+## Access API Manger Profiles
+
+Publisher        - https://apislb.apim.com/publisher/apis
+Developer Portal - https://apislb.apim.com/devportal/apis
+To access analytics portals Please refer this [doc](https://docs.google.com/document/d/1F_JE3xTscV9H5pWvht41g1xEoA-bIGl0VpRL1-FA2n4/edit)
+
 ## Performance Tuning
 
 System configurations can be changed through Ansible to optimize OS level performance. Performance tuning can be enabled by changing `enable_performance_tuning` in `dev/group_vars/apim.yml` to `true`.

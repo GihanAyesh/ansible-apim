@@ -100,17 +100,16 @@ gateway_environments:
       https_endpoint: 'https://localhost:${https.nio.port}' }
 
 # Traffic Manager configurations
-traffic_manager_host_url: https://tm.apim.com:${mgt.transport.https.port}
+traffic_manager_host_url: https://tmlb.apim.com:${mgt.transport.https.port}
 traffic_manager_receiver_url: tcp://tm.apim.com:${receiver.url.port}
 traffic_manager_auth_url: ssl://tm.apim.com:${auth.url.port}
 throttle_config_policy_deployer_url: https://tm.apim.com/services/
 notification_endpoint_url: https://tm.apim.com
 throttle_decision_endpoints:
-  - tcp://tm.apim.com:5672
-  - tcp://tm.apim.com:5672
+  - tcp://tm.apim.com:5683
 throttling_url_group:
   - traffic_manager_urls:
-      - tcp://tm.apim.com:9611
+      - tcp://tm.apim.com:9622
     traffic_manager_auth_urls:
       - ssl://tm.apim.com:9722
 
@@ -133,19 +132,20 @@ eventhub_url_group:
     auth_urls:
       - ssl://tm.apim.com:9722
 
-
 # Datasource configurations
-wso2am_db_type: mysql
-wso2am_db_url: jdbc:mysql://db.apim.com:3306/WSO2AM_DB?useSSL=false
+wso2am_db_type: h2
+#wso2am_db_url: jdbc:mysql://db.apim.com:3306/WSO2AM_DB?useSSL=false
+wso2am_db_url : jdbc:h2:./repository/database/WSO2AM_DB;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE
 wso2am_db_username: wso2carbon
 wso2am_db_password: wso2carbon
-wso2am_db_driver: com.mysql.cj.jdbc.Driver
+#wso2am_db_driver: com.mysql.cj.jdbc.Driver
 
-wso2shared_db_type: mysql
-wso2shared_db_url: jdbc:mysql://db.apim.com:3306/WSO2SHARED_DB?useSSL=false
+wso2shared_db_type: h2
+#wso2shared_db_url: jdbc:mysql://db.apim.com:3306/WSO2SHARED_DB?useSSL=false
+wso2shared_db_url : jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE
 wso2shared_db_username: wso2carbon
 wso2shared_db_password: wso2carbon
-wso2shared_db_driver: com.mysql.cj.jdbc.Driver
+#wso2shared_db_driver: com.mysql.cj.jdbc.Driver
 
 # Key Store and Trust Store configuration
 primary_key_store_name: wso2carbon.jks
