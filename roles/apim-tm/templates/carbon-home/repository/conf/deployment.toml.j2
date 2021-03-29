@@ -1,7 +1,7 @@
 [server]
 hostname = "{{ hostname }}"
 node_ip = "127.0.0.1"
-server_role = "traffic-manager"
+server_role = "default"
 offset = "{{ ports_offset }}"
 
 [super_admin]
@@ -52,15 +52,6 @@ file_name = "{{ trust_store_name }}"
 type = "JKS"
 password = "{% if secure_vault_enabled|bool %}$secret{trust_store_password}{% else %}{{ trust_store_password }}{% endif %}"
 
-# key manager implementation
-[apim.key_manager]
-service_url = "{{ key_manager_server_url }}"
-
-[apim.oauth_config]
-revoke_endpoint = "{{ oauth_configs_revoke_api_url }}"
-enable_token_encryption = false
-enable_token_hashing = false
-
 {% if tm_event_duplicate_url is defined %}
 [apim.throttling]
 //Add service url
@@ -72,12 +63,84 @@ event_duplicate_url = ["{{ tm_event_duplicate_url }}"]
 [[apim.gateway.environment]]
 name = "{{ environment.name }}"
 type = "{{ environment.type }}"
-wss_endpoint = "{{ environment.wss_endpoint }}"
+show_as_token_endpoint_url = "{{ environment.display_in_api_console }}"
+description = "{{ environment.description }}"
+service_url = "{{ environment.service_url }}"
+username= "${admin.username}"
+password= "${admin.password}"
 ws_endpoint = "{{ environment.ws_endpoint }}"
+wss_endpoint = "{{ environment.wss_endpoint }}"
 http_endpoint = "{{ environment.http_endpoint }}"
 https_endpoint = "{{ environment.https_endpoint }}"
 
 {% endfor %}
+
+[apim.oauth_config]
+enable_outbound_auth_header = false
+auth_header = "Authorization"
+revoke_endpoint = "{{ oauth_configs_revoke_api_url }}"
+enable_token_encryption = false
+enable_token_hashing = false
+
+[apim.devportal]
+url = "{{ api_devportal_url }}"
+#enable_application_sharing = true
+#application_sharing_type = "default" #changed to type, saml, default
+#application_sharing_impl = "org.wso2.carbon.apimgt.impl.DefaultGroupIDExtractorImpl"
+#display_multiple_versions = false
+#display_deprecated_apis = false
+#enable_comments = true
+#enable_ratings = true
+#enable_forum = true
+
+[[apim.devportal.application_attributes]]
+required=true
+hidden=false
+name="External Reference Id"
+description="Sample description of the attribute"
+
+[apim.cors]
+allow_origins = "*"
+allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "testKey"]
+allow_credentials = false
+
+[[event_handler]]
+name="userPostSelfRegistration"
+subscriptions=["POST_ADD_USER"]
+
+[service_provider]
+sp_name_regex = "^[\\sa-zA-Z0-9._-]*$"
+
+[apim.key_manager]
+service_url = "{{ key_manager_server_url }}"
+username= "$ref{super_admin.username}"
+password= "$ref{super_admin.password}"
+
+# Traffic Manager configurations
+[apim.throttling]
+service_url = "{{ traffic_manager_host_url }}/services/"
+username= "$ref{super_admin.username}"
+password= "$ref{super_admin.password}"
+throttle_decision_endpoints = [{% for endpoint in throttle_decision_endpoints %}"{{ endpoint }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
+
+{% for url_group in throttling_url_group %}
+[[apim.throttling.url_group]]
+traffic_manager_urls=[{% for url in url_group['traffic_manager_urls'] %}"{{ url }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
+traffic_manager_auth_urls=[{% for url in url_group['traffic_manager_auth_urls'] %}"{{ url }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
+{% endfor %}
+
+[[event_listener]]
+id = "token_revocation"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.is.notification.ApimOauthEventInterceptor"
+order = 1
+
+[event_listener.properties]
+notification_endpoint = "${traffic_manager_host_url}/internal/data/v1/notify"
+username = "${admin.username}"
+password = "${admin.password}"
+'header.X-WSO2-KEY-MANAGER' = "default"
 
 {% if secure_vault_enabled|bool %}
 [secrets]

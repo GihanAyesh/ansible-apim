@@ -8,16 +8,17 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
 
-172.31.69.50    db.apim.com
-172.31.69.50    tmlb.apim.com
-172.31.69.50    apislb.apim.com
-172.31.69.50    gwlb.apim.com
+172.31.69.50      db.apim.com
+172.31.69.50      tmlb.apim.com
+172.31.69.50      apislb.apim.com
+172.31.69.50      gwlb.apim.com
 
 172.31.20.206     apis.apim.com
+172.31.20.206     vh.wso2.com
 
 172.31.21.108     tm.apim.com
 172.31.21.108     gw.apim.com
 
-3.91.31.82      node1.apim.com
-3.89.231.81     node2.apim.com
-44.192.38.37    node3.apim.com
+3.91.31.82        node1.apim.com
+3.89.231.81       node2.apim.com
+44.192.38.37      node3.apim.com

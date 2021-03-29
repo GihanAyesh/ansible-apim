@@ -128,3 +128,10 @@ internal_key_store_password = "[{{ internal_key_store_password }}]"
 tls_key_store_key_password = "[{{ tls_key_store_key_password }}]"
 tls_key_store_password = "[{{ tls_key_store_password }}]"
 {% endif %}
+
+[apim.sync_runtime_artifacts.gateway]
+gateway_labels =["us-region"]
+artifact_retriever = "DBRetriever"
+deployment_retry_duration = 15000
+data_retrieval_mode = "sync"
+event_waiting_time = 5000
