@@ -63,13 +63,15 @@ enable_token_hashing = false
 
 {% if tm_event_duplicate_url is defined %}
 [apim.throttling]
+//Add service url
 event_duplicate_url = ["{{ tm_event_duplicate_url }}"]
 {% endif %}
 
 {% for environment in gateway_environments %}
 
 [[apim.gateway.environment]]
-
+name = "{{ environment.name }}"
+type = "{{ environment.type }}"
 wss_endpoint = "{{ environment.wss_endpoint }}"
 ws_endpoint = "{{ environment.ws_endpoint }}"
 http_endpoint = "{{ environment.http_endpoint }}"

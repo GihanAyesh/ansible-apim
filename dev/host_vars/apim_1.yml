@@ -22,8 +22,8 @@ hostname: apislb.apim.com
 ports_offset: 12
 
 # User manager configurations
-admin_username: admin
-admin_password: admin
+admin_username: wso2apim
+admin_password: wso2apim
 
 # api-manager.xml configs
 oauth_configs_revoke_api_url: https://localhost:${https.nio.port}/revoke

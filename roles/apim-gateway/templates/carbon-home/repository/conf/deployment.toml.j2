@@ -12,19 +12,11 @@ username = "{% if secure_vault_enabled|bool %}$secret{admin_username}{% else %}{
 password = "{% if secure_vault_enabled|bool %}$secret{admin_password}{% else %}{{ admin_password }}{% endif %}"
 create_admin_account = true
 
-[database.apim_db]
-type = "{{ wso2am_db_type }}"
-url = "{{ wso2am_db_url }}"
-username = "{% if secure_vault_enabled|bool %}$secret{wso2am_db_username}{% else %}{{ wso2am_db_username }}{% endif %}"
-password = "{% if secure_vault_enabled|bool %}$secret{wso2am_db_password}{% else %}{{ wso2am_db_password }}{% endif %}"
-
-
 [database.shared_db]
 type = "{{ wso2shared_db_type }}"
 url = "{{ wso2shared_db_url }}"
 username = "{% if secure_vault_enabled|bool %}$secret{wso2shared_db_username}{% else %}{{ wso2shared_db_username }}{% endif %}"
 password = "{% if secure_vault_enabled|bool %}$secret{wso2shared_db_password}{% else %}{{ wso2shared_db_password }}{% endif %}"
-
 
 [keystore.tls]
 file_name =  "{{ tls_key_store_name }}"
@@ -66,7 +58,7 @@ encoding = "base64" # base64,base64url
 claim_dialect = "http://wso2.org/claims"
 header = "X-JWT-Assertion"
 signing_algorithm = "SHA256withRSA"
-#enable_user_claims = true
+enable_user_claims = true
 #claims_extractor_impl = "org.wso2.carbon.apimgt.impl.token.DefaultClaimsRetriever"
 
 [apim.throttling]

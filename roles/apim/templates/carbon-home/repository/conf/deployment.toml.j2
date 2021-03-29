@@ -76,16 +76,6 @@ https_endpoint = "{{ environment.https_endpoint }}"
 
 {% endfor %}
 
-{% for virtual_host in gateway_environment_virtual_host %}
-
-[[apim.gateway.environment.virtual_host]]
-ws_endpoint = "{{ virtual_host.ws_endpoint }}"
-wss_endpoint = "{{ virtual_host.wss_endpoint }}"
-http_endpoint = "{{ virtual_host.http_endpoint }}"
-https_endpoint = "{{ virtual_host.https_endpoint }}"
-
-{% endfor %}
-
 #[apim.cache.gateway_token]
 #enable = true
 #expiry_time = "900s"
@@ -266,6 +256,7 @@ password= "$ref{super_admin.password}"
 
 # Traffic Manager configurations
 [apim.throttling]
+service_url = "{{ traffic_manager_host_url }}/services/"
 username= "$ref{super_admin.username}"
 password= "$ref{super_admin.password}"
 throttle_decision_endpoints = [{% for endpoint in throttle_decision_endpoints %}"{{ endpoint }}"{%- if not loop.last -%},{% endif %}{% endfor %}]
@@ -283,7 +274,7 @@ name = "org.wso2.is.notification.ApimOauthEventInterceptor"
 order = 1
 
 [event_listener.properties]
-notification_endpoint = "https://tm.apim.com:${mgt.transport.https.port}/internal/data/v1/notify"
+notification_endpoint = "${traffic_manager_host_url}/internal/data/v1/notify"
 username = "${admin.username}"
 password = "${admin.password}"
 'header.X-WSO2-KEY-MANAGER' = "default"
