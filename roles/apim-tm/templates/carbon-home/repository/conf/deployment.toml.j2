@@ -66,6 +66,17 @@ enable_token_hashing = false
 event_duplicate_url = ["{{ tm_event_duplicate_url }}"]
 {% endif %}
 
+{% for environment in gateway_environments %}
+
+[[apim.gateway.environment]]
+
+wss_endpoint = "{{ environment.wss_endpoint }}"
+ws_endpoint = "{{ environment.ws_endpoint }}"
+http_endpoint = "{{ environment.http_endpoint }}"
+https_endpoint = "{{ environment.https_endpoint }}"
+
+{% endfor %}
+
 {% if secure_vault_enabled|bool %}
 [secrets]
 admin_password = "[{{ admin_password }}]"

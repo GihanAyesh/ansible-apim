@@ -64,15 +64,25 @@ password = "{% if secure_vault_enabled|bool %}$secret{trust_store_password}{% el
 [[apim.gateway.environment]]
 name = "{{ environment.name }}"
 type = "{{ environment.type }}"
-display_in_api_console = true
+show_as_token_endpoint_url = "{{ environment.display_in_api_console }}"
 description = "{{ environment.description }}"
 service_url = "{{ environment.service_url }}"
 username= "${admin.username}"
 password= "${admin.password}"
 ws_endpoint = "{{ environment.ws_endpoint }}"
+wss_endpoint = "{{ environment.wss_endpoint }}"
 http_endpoint = "{{ environment.http_endpoint }}"
 https_endpoint = "{{ environment.https_endpoint }}"
-show_as_token_endpoint_url = true
+
+{% endfor %}
+
+{% for virtual_host in gateway_environment_virtual_host %}
+
+[[apim.gateway.environment.virtual_host]]
+ws_endpoint = "{{ virtual_host.ws_endpoint }}"
+wss_endpoint = "{{ virtual_host.wss_endpoint }}"
+http_endpoint = "{{ virtual_host.http_endpoint }}"
+https_endpoint = "{{ virtual_host.https_endpoint }}"
 
 {% endfor %}
 
