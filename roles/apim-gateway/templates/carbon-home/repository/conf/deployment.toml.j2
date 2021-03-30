@@ -95,9 +95,10 @@ remove_outbound_auth_header = true
 auth_header = "Authorization"
 
 [apim.cors]
+enable = true
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
-allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey","Internal-Key"]
 allow_credentials = false
 
 {% if gw_https_proxy_port is defined %}
@@ -111,7 +112,7 @@ HostnameVerifier = "AllowAll"
 [apim.analytics]
 enable = true
 config_endpoint = "https://analytics-event-auth.st.choreo.dev/auth/v1"
-auth_token = "3e569596-bdc1-4dc9-b4dc-38fa2c399622"
+auth_token = "09653bdc-8ab5-4346-ac3f-0a3bce0c9594"
 
 {% if secure_vault_enabled|bool %}
 [secrets]
@@ -128,3 +129,6 @@ internal_key_store_password = "[{{ internal_key_store_password }}]"
 tls_key_store_key_password = "[{{ tls_key_store_key_password }}]"
 tls_key_store_password = "[{{ tls_key_store_password }}]"
 {% endif %}
+
+[apim.sync_runtime_artifacts.gateway]
+gateway_labels =["us-region"]
